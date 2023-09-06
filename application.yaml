@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: myapp
+  namespace: argocd
+spec:
+  project: test
+  source:
+    chart: argocdtest-chart
+    repoURL: https://github.com/FlooderLooder/ArgoCDTest-config.git
+    targetRevision: HEAD
+    helm:
+      releaseName: argocdtest-ti
+      valueFiles:
+      - values-ti.yaml
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: ti
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true
