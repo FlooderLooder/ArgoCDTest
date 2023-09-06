@@ -20,7 +20,7 @@ spec:
           emptyDir: { }
       containers:
         - name: {{ printf "argocdtest" }}
-          image: flooderlooder/argocdtest:1.0 # use image from whitelisted (on firewall and calico!) repository
+          image: flooderlooder/argocdtest:1.1 # use image from whitelisted (on firewall and calico!) repository
           imagePullPolicy: Always
           volumeMounts:
             - mountPath: /tmp
