@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ printf "argocdtest-deployment-%s" .Values.stage }}
+  labels:
+    app: {{ printf "argocdtest" }}
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: {{ printf "argocdtest" }}
+  template:
+    metadata:
+      labels:
+        app: {{ printf "argocdtest" }}
+    spec:
+      volumes:
+        - name: tmp-volume
+          emptyDir: { }
+      containers:
+        - name: {{ printf "argocdtest" }}
+          image: flooderlooder/argocdtest:1.0 # use image from whitelisted (on firewall and calico!) repository
+          imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmp-volume
+          ports:
+            - containerPort: 8080
+      nodeSelector:
+        kubernetes.io/os: linux # always use nodeSelector since our cluster is mixed type (with windows node pools also)

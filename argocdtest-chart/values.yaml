@@ -1,0 +1,4 @@
+# Default values for getex-chart.
+# Please overwrite stage-specific values for each stage
+
+stage: #overwrite

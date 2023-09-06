@@ -1,0 +1,15 @@
+apiVersion: v1
+# This will be the Service setup
+kind: Service
+metadata:
+  # Your service name
+  name: argocdtest-service
+spec:
+  selector:
+    # selector that matches the pod
+    app: argocdtest
+  # type of service
+  ports:
+  - protocol: TCP 
+    # port for exposing the service        
+    port: 8080
