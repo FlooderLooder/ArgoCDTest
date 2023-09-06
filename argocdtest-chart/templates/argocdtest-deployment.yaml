@@ -26,6 +26,6 @@ spec:
             - mountPath: /tmp
               name: tmp-volume
           ports:
-            - containerPort: 8080
+            - containerPort: 8092
       nodeSelector:
         kubernetes.io/os: linux # always use nodeSelector since our cluster is mixed type (with windows node pools also)
