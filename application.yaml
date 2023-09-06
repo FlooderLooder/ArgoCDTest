@@ -8,7 +8,7 @@ spec:
   source:
     chart: argocdtest-chart
     repoURL: https://github.com/FlooderLooder/ArgoCDTest-config.git
-    targetRevision: HEAD
+    targetRevision: master
     helm:
       releaseName: argocdtest-ti
       valueFiles:
