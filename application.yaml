@@ -39,12 +39,39 @@ spec:
     path: argocdtest-chart
     targetRevision: HEAD
     helm:
-      releaseName: argocdtest-ti
+      releaseName: argocdtest-qs
       valueFiles:
       - values-qs.yaml
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: ti
+    namespace: qs
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+      
+---
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: myapp-prod
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/FlooderLooder/ArgoCDTest-config.git
+    path: argocdtest-chart
+    targetRevision: HEAD
+    helm:
+      releaseName: argocdtest-prod
+      valueFiles:
+      - values-prod.yaml
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: prod
   syncPolicy:
     automated:
       selfHeal: true
