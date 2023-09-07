@@ -1,8 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: myapp
+  name: myapp-ti
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
@@ -17,8 +19,33 @@ spec:
     server: "https://kubernetes.default.svc"
     namespace: ti
   syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true
+      
+---
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: myapp-qs
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/FlooderLooder/ArgoCDTest-config.git
+    path: argocdtest-chart
+    targetRevision: HEAD
+    helm:
+      releaseName: argocdtest-ti
+      valueFiles:
+      - values-qs.yaml
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: ti
+  syncPolicy:
     automated:
       selfHeal: true
       prune: true
