@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: curl-the-party
+  namespace: ti
+spec:
+  template:
+    spec:
+      containers:
+      - name: curl-the-party
+        image: alpine/curl:8.2.1
+        command: ["curl",  "-X", "GET", "-fsSl", "http://10.100.29.235:8092/partynumber"]
+      restartPolicy: Never
+  backoffLimit: 2
